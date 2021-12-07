@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * This class is an object that represents a mini room. 
+ * @author johan jojoa
+ */
 public class MiniRoom
 {
 	public final double FIXED_COST = 100;
@@ -21,6 +25,11 @@ public class MiniRoom
 	
 	//Methods
 	
+	/**
+	 * MiniRoom constructor.
+	 * @param window Represents if the room have a window.
+	 * @param roomNumber The number of the room.
+	 */
 	public MiniRoom(boolean window, int roomNumber)
 	{
 		this.window = window;
@@ -35,6 +44,9 @@ public class MiniRoom
 		isOn = false;
 	}
 	
+	/**
+	 * Calculates the rental cost of the room.
+	 */
 	public void calculateRentalCost()
 	{
 		double totalCost;
@@ -61,6 +73,10 @@ public class MiniRoom
 		this.rentalCost = totalCost;
 	}
 	
+	/**
+	 * Initialize the servers array.
+	 * @param hostedServers 
+	 */
 	public void defineServers(int hostedServers)
 	{
 		if(servers == null)
@@ -69,6 +85,16 @@ public class MiniRoom
 		}
 	}
 	
+	/**
+	 * Initialize the servers.
+	 * @param serverNumber
+	 * @param hostedServers
+	 * @param cacheMemory
+	 * @param numberOfProcessors
+	 * @param ramMemory
+	 * @param numberOfDiscs
+	 * @return
+	 */
 	public String initServer(int serverNumber, int hostedServers, double cacheMemory, int numberOfProcessors, double ramMemory, int numberOfDiscs)
 	{
 		String answer = "The room has been rented successfully";
@@ -80,16 +106,32 @@ public class MiniRoom
 		return answer;
 	}
 	
+	/**
+	 * Initialize the processors.
+	 * @param serverNumber
+	 * @param processorNumber
+	 * @param brand
+	 */
 	public void initProcessor(int serverNumber, int processorNumber, int brand)
 	{
 		servers[serverNumber].initProcessor(processorNumber, brand);
 	}
 	
+	/**
+	 * Initialize the discs.
+	 * @param serverNumber
+	 * @param diskNumber
+	 * @param diskCapacity
+	 */
 	public void initDisk(int serverNumber, int diskNumber, double diskCapacity)
 	{
 		servers[serverNumber].initDisk(diskNumber, diskCapacity);
 	}
 	
+	/**
+	 * Calculates the disk capacity.
+	 * @return
+	 */
 	public int calculateDisk()
 	{
 		int result = 0;
@@ -102,6 +144,10 @@ public class MiniRoom
 		return result;
 	}
 	
+	/**
+	 * Calculates the RAM capacity.
+	 * @return
+	 */
 	public int calculateRam()
 	{
 		int result = 0;
@@ -114,6 +160,9 @@ public class MiniRoom
 		return result;
 	}
 	
+	/**
+	 * Erase one server.
+	 */
 	public void deleteServers()
 	{
 		for(int i = 0; i < servers.length; i++)
@@ -122,6 +171,9 @@ public class MiniRoom
 		}
 	}
 	
+	/**
+	 * Print the mini room info.
+	 */
 	public String toString()
 	{
 		String windowString;

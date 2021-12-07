@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * is an object that represents a user, in this case, a project. 
+ * @author johan jojoa
+ */
 public class Project extends User
 {
 	//Attributes
@@ -12,6 +16,11 @@ public class Project extends User
 	
 	//Methods
 	
+	/**
+	 * Project constructor, initialize initialize its attributes.
+	 * @param companyName "ICESI".
+	 * @param registryNumber The project registry number.
+	 */
 	public Project(String companyName, String registryNumber)
 	{
 		super(companyName);
@@ -19,9 +28,21 @@ public class Project extends User
 		this.registryNumber = registryNumber;
 	}
 
+	/**
+	 * A room is assigned to the project.
+	 * @param room The assigned room.
+	 */
 	public void rentRoom(MiniRoom room)
 	{
 		this.room = room;
+	}
+	
+	/**
+	 * The rental of the room linked to the project is canceled.
+	 */
+	public void cancelRoom()
+	{
+		this.room = null;
 	}
 	
 	

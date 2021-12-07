@@ -75,8 +75,8 @@ public class DataCenter
 	}
 	
 	/**
-	 * 
-	 * @param answer
+	 * Based on the user's response, it tells the system what to do.
+	 * @param answer Represents the functionality chosen by the user.
 	 */
 	public void toDo(int answer)
 	{
@@ -113,7 +113,12 @@ public class DataCenter
 				break;		
 		}
 	}
-	
+
+	/**
+	 * Displays a list of available rooms on the screen.
+	 * @param condition If this condition is true, only the list of rooms that are in windows or those that are not can be displayed.
+	 * @param windowB It expresses whether a room is sought in the window or not.
+	 */
 	public void generateList(boolean condition, boolean windowB)
 	{
 		if(condition == true)
@@ -134,6 +139,9 @@ public class DataCenter
 		}
 	}
 	
+	/**
+	 * Allows the user to rent a room. 
+	 */
 	public void rentRoom()
 	{
 		String registerStatus = registerUser();
@@ -230,6 +238,10 @@ public class DataCenter
 		menu();
 	}
 	
+	/**
+	 * Allows you to register a user.
+	 * @return Message that validates the correct registration of the user or shows an error if any data was entered incorrectly.
+	 */
 	public String registerUser()
 	{
 		String message = "";
@@ -310,6 +322,12 @@ public class DataCenter
 		return message;
 	}
 	
+	/**
+	 * Initialize the servers in a mini room.
+	 * @param serverNumber The number in the room's server array to initialize.
+	 * @param roomNumber The room the server belongs to.
+	 * @param hostedServers The number of servers housed in the room.
+	 */
 	public void initServer(int serverNumber, int roomNumber, int hostedServers)
 	{
 		String answer ="";
@@ -385,7 +403,13 @@ public class DataCenter
 			}
 		}
 	}
-	
+
+	/**
+	 * Initialize the processors in a server.
+	 * @param processorNumber The processor number in the server's array to initialize.
+	 * @param roomNumber The room the processor belongs to.
+	 * @param serverNumber The server the processor belongs to.
+	 */
 	public void initProcessor(int processorNumber, int roomNumber, int serverNumber)
 	{
 		System.out.println("What brand is the processor "+(processorNumber+1)+"?");
@@ -408,6 +432,12 @@ public class DataCenter
 		theSystem.initProcessor(roomNumber, serverNumber, processorNumber, brand);
 	}
 	
+	/**
+	 * Initialize the discs in a server.
+	 * @param diskNumber The disk number in the server's array to initialize.
+	 * @param roomNumber The room the disk belongs to.
+	 * @param serverNumber The server the disk belongs to.
+	 */
 	public void initDisk(int diskNumber, int roomNumber, int serverNumber)
 	{
 		System.out.println("Write down the capacity of the disk "+(diskNumber+1)+" (in teras).");		
@@ -425,6 +455,9 @@ public class DataCenter
 		theSystem.initDisk(roomNumber, serverNumber, diskNumber, diskCapacity);
 	}
 
+	/**
+	 * It allows the user to cancel the rent of a room.
+	 */
 	public void cancelRoom()
 	{
 		int roomToCancel;
@@ -569,6 +602,9 @@ public class DataCenter
 		menu();
 	}
 	
+	/**
+	 * Displays a map of the building, where rooms are on and rooms are off.
+	 */
 	public void showMap()
 	{
 		String answer = theSystem.showMap();
@@ -576,6 +612,9 @@ public class DataCenter
 		System.out.println(answer);
 	}
 	
+	/**
+	 * It allows the user to simulate the lighting of all the rooms, first showing the current map and then the map with the changes, and then asking the user if they want to apply those changes to the real building.
+	 */
 	public void powerOn()
 	{
 		String answer = theSystem.simulatePowerOn();
@@ -610,6 +649,9 @@ public class DataCenter
 		menu();
 	}
 	
+	/**
+	 * It allows the user to simulate the shutdown of the rooms according to the desired key, first showing the current map and then the map with the changes, and then asking the user if they want to apply those changes to the real building.
+	 */
 	public void powerOff()
 	{
 		String answer;
@@ -732,6 +774,9 @@ public class DataCenter
 		menu();
 	}
 	
+	/**
+	 * It shows the user a menu of what each key does that they can use to turn off the rooms.
+	 */
 	public void showLettersMenu()
 	{
 		System.out.println("Letter L: turn off the first mini-rooms of all corridors, along with the mini-rooms of the first corridor.\r\n" + 

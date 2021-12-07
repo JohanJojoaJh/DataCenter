@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * This class implements the functions chosen by the user.
+ * @author johan jojoa
+ */
 public class DataCenterSystem
 {
 	public final int CORRIDORS = 8;
@@ -13,6 +17,9 @@ public class DataCenterSystem
 	
 	//Methods
 	
+	/**
+	 * DataCenterSystem constructor, initialize the mini rooms and the users.
+	 */
 	public DataCenterSystem()
 	{
 		miniRooms = new MiniRoom[CORRIDORS][ROOMS_PER_CORRIDOR];
@@ -21,6 +28,9 @@ public class DataCenterSystem
 		fillAndAsignate();
 	}
 
+	/**
+	 * Initialize each room with the basic information that the user does not provide. 
+	 */
 	public void fillAndAsignate()
 	{
 		boolean window = true;
@@ -65,7 +75,13 @@ public class DataCenterSystem
             }
         }
     }
-		
+	
+	/**
+	 * Create a list of available rooms.
+	 * @param condition If this condition is true, only the list of rooms that are in windows or those that are not can be displayed.
+	 * @param windowB It expresses whether a room is sought in the window or not.
+	 * @return The list that will be displayed to the user on the screen.
+	 */
 	public String generateList(boolean condition, boolean windowB) 
 	{
 		String answer = "| Room number | Have a window | Corridor | Column | Rental cost";
@@ -108,6 +124,12 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Register an user in the system. 
+	 * @param userId String that represents the nit of a company or the registration number of a project.
+	 * @param companyName Name of the company that will be in the room, if it is a project, the company will be "ICESI".
+	 * @return Message that validates the correct registration of the user or shows an error if any data was entered incorrectly.
+	 */
 	public String registerUser(String userId, String companyName)
 	{
 		String message = "";
@@ -177,6 +199,14 @@ public class DataCenterSystem
 		return message;
 	}
 	
+	/**
+	 * Assign a project a room.
+	 * @param companyName The name of the company that will be in the room, "ICESI".
+	 * @param userId String that represents the registration number of a project.
+	 * @param roomNumber The room to which the values will be modified and assigned to the project.
+	 * @param rentalDate The date the rent is made.
+	 * @return Message that validates the correct rent of a room or shows an error if any data was entered incorrectly.
+	 */
 	public String rentRoom(String companyName, String userId, int roomNumber, String rentalDate)
 	{
 		String answer = "The room has been rented successfully";
@@ -195,6 +225,13 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Assign a company a room.
+	 * @param userId String that represents the nit of a company.
+	 * @param roomNumber The room to which the values will be modified and assigned to the company.
+	 * @param rentalDate The date the rent is made.
+	 * @return Message that validates the correct rent of a room or shows an error if any data was entered incorrectly.
+	 */
 	public String rentRoom(String userId, int roomNumber, String rentalDate)
 	{
 		String answer = "The room has been rented successfully";
@@ -213,6 +250,17 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Initialize a mini room Server.
+	 * @param roomNumber The mini room to which the server belongs.
+	 * @param serverNumber The number in the room's server array to initialize.
+	 * @param hostedServers The number of servers housed in the room.
+	 * @param cacheMemory The cache that the server will have.
+	 * @param numberOfProcessors The number of processors the server will have.
+	 * @param ramMemory The RAM that the server will have.
+	 * @param numberOfDiscs The number of discs the server will have.
+	 * @return Message that validates the correct initialization of a server or shows an error if any data was entered incorrectly.
+	 */
 	public String initServer(int roomNumber, int serverNumber, int hostedServers, double cacheMemory, int numberOfProcessors, double ramMemory, int numberOfDiscs)
 	{
 		String answer = "";
@@ -234,6 +282,13 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Initialize a server processor.
+	 * @param roomNumber The mini room to which the processor belongs.
+	 * @param serverNumber The server to which the processor belongs.
+	 * @param processorNumber The processor number in the server's array to initialize.
+	 * @param brand Is the processor's brand.
+	 */
 	public void initProcessor(int roomNumber, int serverNumber, int processorNumber, int brand)
 	{
 		MiniRoom searchedRoom = searchForRoomNumber(roomNumber);
@@ -241,6 +296,13 @@ public class DataCenterSystem
 		searchedRoom.initProcessor(serverNumber, processorNumber, brand);
 	}
 	
+	/**
+	 * Initialize a server disk.
+	 * @param roomNumber The mini room to which the disk belongs.
+	 * @param serverNumber The server to which the disk belongs.
+	 * @param diskNumber The disk number in the server's array to initialize.
+	 * @param diskCapacity Is the capacity of the disk.
+	 */
 	public void initDisk(int roomNumber, int serverNumber, int diskNumber, double diskCapacity)
 	{
 		MiniRoom searchedRoom = searchForRoomNumber(roomNumber);
@@ -248,6 +310,12 @@ public class DataCenterSystem
 		searchedRoom.initDisk(serverNumber, diskNumber, diskCapacity);
 	}
 	
+	/**
+	 * Asks the company to verify if they want to cancel the rental of a room, showing their processing capacity.
+	 * @param nit Company's nit.
+	 * @param roomToCancel The room that the company is about to cancel.
+	 * @return A message asking the company if you really want to cancel your rental.
+	 */
 	public String validateCancelation(String nit, int roomToCancel)
 	{
 		String answer = "";
@@ -293,6 +361,12 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Cancel the rent of a room for a user.
+	 * @param userId String that represents the nit of a company or the registration number of a project.
+	 * @param roomToCancel The room that the user wants to cancel.
+	 * @return Message that validates the correct the correct cancellation of the rental or shows an error if any data was entered incorrectly.
+	 */
 	public String cancelRoom(String userId, int roomToCancel)
 	{
 		String answer = "";
@@ -315,11 +389,28 @@ public class DataCenterSystem
 			searchedRoom.setHostedServers(0);
 			searchedRoom.deleteServers();
 			searchedRoom.setOn(false);
+			
+			Project project = searchForRegistryNumber(userId);
+			
+			if(project == null)
+			{
+				Company company = searchForNit(userId);
+				company.cancelRoom(roomToCancel);
+			}
+			else
+			{
+				project.cancelRoom();
+			}
 		}
 		
 		return answer;
 	}
 	
+	/**
+	 * Asks the company to verify if they want to cancel the rent of all the rooms, showing their total processing capacity.
+	 * @param nit Company's nit.
+	 * @return A message asking the company if you really want to cancel the rent of all the rooms.
+	 */
 	public String validateMassiveCancelation(String nit)
 	{
 		int totalDisk = 0;
@@ -347,6 +438,11 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Cancel the rent of all the rooms for a company.
+	 * @param nit Company's nit.
+	 * @return Message that validates the correct cancellation of all the rooms or shows an error if any data was entered incorrectly.
+	 */
 	public String cancelAllRooms(String nit)
 	{
 		String answer = "";
@@ -363,6 +459,9 @@ public class DataCenterSystem
             		miniRooms[i][j].setHostedServers(0);
             		miniRooms[i][j].deleteServers();
             		miniRooms[i][j].setOn(false);
+            		
+            		Company company = searchForNit(nit);
+    				company.cancelAllRooms();
             	}
             }
         }
@@ -370,6 +469,10 @@ public class DataCenterSystem
 		return answer;
 	}
 
+	/**
+	 * Creates a map of the building, where rooms are on and rooms are off.
+	 * @return Building map.
+	 */
 	public String showMap()
 	{
 		String answer = "";
@@ -408,6 +511,10 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Creates a map of the building, where all the rooms are on.
+	 * @return Building map.
+	 */
 	public String simulatePowerOn()
 	{
 		String answer = "";
@@ -435,6 +542,10 @@ public class DataCenterSystem
 		return answer;	
 	}
 	
+	/**
+	 * Power on all the building rooms.
+	 * @return A success message.
+	 */
 	public String powerOn()
 	{
 		String answer = "\n Success.\n";
@@ -450,6 +561,11 @@ public class DataCenterSystem
 		return answer;	
 	}
 	
+	/**
+	 * Create a map of the building, where the rooms will be turned off based on the letter entered by the user.
+	 * @param desiredLetter The letter entered by the user.
+	 * @return Building map.
+	 */
 	public String simulatePowerOff(String desiredLetter)
 	{
 		String answer = "";
@@ -731,6 +847,11 @@ public class DataCenterSystem
 		return answer;	
 	}
 	
+	/**
+	 * Create a map of the building, where a column will be turned off based on a number entered by the user.
+	 * @param column The column that the user wants to turn off.
+	 * @return Building map.
+	 */
 	public String simulatePowerOffColumn(int column)
 	{
 		String answer = "";
@@ -773,6 +894,11 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Create a map of the building, where a row will be turned off based on a number entered by the user.
+	 * @param row The row that the user wants to turn off.
+	 * @return Building map.
+	 */
 	public String simulatePowerOffRow(int row)
 	{
 		String answer = "";
@@ -815,6 +941,12 @@ public class DataCenterSystem
 		return answer;
 	}	
 	
+	/**
+	 * Power off the building rooms based on a letter entered by the user.
+	 * @param desiredLetter The letter entered by the user.
+	 * @param position If the user chooses the letter m or p, it will be the row or column that they want to turn off.
+	 * @return A success message.
+	 */
 	public String powerOff(String desiredLetter, int position)
 	{
 		String answer = "\n Success.\n";
@@ -959,7 +1091,12 @@ public class DataCenterSystem
 		
 		return answer;	
 	}
-		
+	
+	/**
+	 * Find the room that belongs to a project based on its registration number.
+	 * @param registryNumber The project registration number.
+	 * @return The room number.
+	 */
 	public int findRoom(String registryNumber)
 	{
 		int answer = 0;
@@ -988,6 +1125,11 @@ public class DataCenterSystem
 		return answer;
 	}
 	
+	/**
+	 * Search for a room based on its room number.
+	 * @param roomNumber The room number.
+	 * @return If it finds the room it will return that object, otherwise it will return null.
+	 */
 	public MiniRoom searchForRoomNumber(int roomNumber)
 	{
 		MiniRoom searchMiniRoom = null;
@@ -1004,6 +1146,11 @@ public class DataCenterSystem
 		return searchMiniRoom;
 	}
 
+	/**
+	 * Search for a project based on its registry number.
+	 * @param registryNumber The project registry number.
+	 * @return If it finds the project it will return that object, otherwise it will return null.
+	 */
 	public Project searchForRegistryNumber(String registryNumber)
 	{
 		Project searchUser = null;
@@ -1020,6 +1167,11 @@ public class DataCenterSystem
 		return searchUser;
 	}
 	
+	/**
+	 * Search for a company based on its nit.
+	 * @param nit The company nit.
+	 * @return If it finds the company it will return that object, otherwise it will return null.
+	 */
 	public Company searchForNit(String nit)
 	{
 		Company searchUser = null;
