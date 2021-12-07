@@ -84,6 +84,7 @@ public class DataCenter
 			
 			case 4:
 				showMap();
+				menu();
 				break;
 				
 			case 5:
@@ -98,7 +99,7 @@ public class DataCenter
 	
 	public void generateList(boolean condition, boolean windowB)
 	{
-		if(condition == true && windowB == true)
+		if(condition == true)
 		{			
 			String answer = theSystem.generateList(true, windowB);
 			System.out.println(answer);
@@ -170,6 +171,8 @@ public class DataCenter
 			
 			generateList(true, windowB);
 			
+			System.out.println("\n Above is a list of rooms that meet your condition \n");
+			
 			System.out.println("Write the actual date.");
 			String rentalDate = lector.nextLine();
 			lector.nextLine();
@@ -191,7 +194,7 @@ public class DataCenter
 				lector.nextLine();
 			}
 			
-			for(int i = 1; i <= hostedServers; i++)
+			for(int i = 0; i < hostedServers; i++)
 			{
 				initServer(i, roomNumber, hostedServers);
 			}
@@ -294,7 +297,7 @@ public class DataCenter
 	{
 		String answer ="";
 		
-		System.out.println("Enter the amount of cache memory (in GB).");
+		System.out.println("Enter the amount of cache memory (in GB) of the server "+(serverNumber+1)+".");
 		double cacheMemory = lector.nextDouble();
 		lector.nextLine();
 		
@@ -354,22 +357,21 @@ public class DataCenter
 			rentRoom();
 		}
 		else
-		{		
-			for(int i = 1; i <= numberOfDiscs; i++)
-			{
-				initDisk(i, roomNumber, serverNumber);
-			}
-			
-			for(int i = 1; i <= numberOfProcessors; i++)
+		{					
+			for(int i = 0; i < numberOfProcessors; i++)
 			{
 				initProcessor(i, roomNumber, serverNumber);
+			}
+			for(int i = 0; i < numberOfDiscs; i++)
+			{
+				initDisk(i, roomNumber, serverNumber);
 			}
 		}
 	}
 	
 	public void initProcessor(int processorNumber, int roomNumber, int serverNumber)
 	{
-		System.out.println("What brand is the processor?");
+		System.out.println("What brand is the processor "+(processorNumber+1)+"?");
 		System.out.println("1. INTEL\n2. AMD");
 		
 		int brand = lector.nextInt();
@@ -391,7 +393,7 @@ public class DataCenter
 	
 	public void initDisk(int diskNumber, int roomNumber, int serverNumber)
 	{
-		System.out.println("Write down the capacity of the disks (in teras).");		
+		System.out.println("Write down the capacity of the disk "+(diskNumber+1)+" (in teras).");		
 		double diskCapacity = lector.nextDouble();
 		lector.nextLine();
 		
@@ -450,27 +452,36 @@ public class DataCenter
 					roomToCancel = lector.nextInt();
 					lector.nextLine();
 					
-					System.out.println(theSystem.validateCancelation(roomToCancel));
-					System.out.println("1. Yes.\n2. No.");
-					int answer = lector.nextInt();
-					lector.nextLine();
+					String flow = theSystem.validateCancelation(nit, roomToCancel);
+					System.out.println(flow);
 					
-					while(answer < 1 || answer > 2)
+					if(flow.startsWith("Error"))
 					{
-						System.out.println(theSystem.validateCancelation(roomToCancel));
-						System.out.println("1. Yes.\n2. No.");
-						
-						answer = lector.nextInt();
-						lector.nextLine();
-					}
-					
-					if(answer == 1)
-					{
-						System.out.println(theSystem.cancelRoom(nit, roomToCancel));
+						menu();
 					}
 					else
 					{
-						menu();
+						System.out.println("1. Yes.\n2. No.");
+						int answer = lector.nextInt();
+						lector.nextLine();
+						
+						while(answer < 1 || answer > 2)
+						{
+							System.out.println(theSystem.validateCancelation(nit, roomToCancel));
+							System.out.println("1. Yes.\n2. No.");
+							
+							answer = lector.nextInt();
+							lector.nextLine();
+						}
+						
+						if(answer == 1)
+						{
+							System.out.println(theSystem.cancelRoom(nit, roomToCancel));
+						}
+						else
+						{
+							menu();
+						}
 					}
 				}
 				else
@@ -507,27 +518,34 @@ public class DataCenter
 				
 				roomToCancel = theSystem.findRoom(registryNumber);
 				
-				System.out.println(theSystem.validateCancelation(roomToCancel));
-				System.out.println("1. Yes.\n2. No.");
-				int answer = lector.nextInt();
-				lector.nextLine();
-				
-				while(answer < 1 || answer > 2)
+				if(roomToCancel == -1)
 				{
-					System.out.println(theSystem.validateCancelation(roomToCancel));
-					System.out.println("1. Yes.\n2. No.");
-					
-					answer = lector.nextInt();
-					lector.nextLine();
-				}
-				
-				if(answer == 1)
-				{
-					System.out.println(theSystem.cancelRoom(registryNumber, roomToCancel));
+					System.out.println("Error: Project registry number not found");
 				}
 				else
 				{
-					menu();
+					System.out.println(theSystem.validateCancelation("---_---", roomToCancel));
+					System.out.println("1. Yes.\n2. No.");
+					int answer = lector.nextInt();
+					lector.nextLine();
+					
+					while(answer < 1 || answer > 2)
+					{
+						System.out.println(theSystem.validateCancelation("---_---", roomToCancel));
+						System.out.println("1. Yes.\n2. No.");
+						
+						answer = lector.nextInt();
+						lector.nextLine();
+					}
+					
+					if(answer == 1)
+					{
+						System.out.println(theSystem.cancelRoom(registryNumber, roomToCancel));
+					}
+					else
+					{
+						menu();
+					}
 				}
 				break;
 		}
@@ -539,15 +557,13 @@ public class DataCenter
 		String answer = theSystem.showMap();
 		
 		System.out.println(answer);
-		
-		menu();
 	}
 	
 	public void powerOn()
 	{
 		String answer = theSystem.simulatePowerOn();
 		
-		System.out.println("\\r Right now, the building looks like this:\n");
+		System.out.println("\r Right now, the building looks like this:");
 		showMap();
 				
 		System.out.println("\r If you apply the changes, the building would be as follows:\n");
@@ -588,7 +604,7 @@ public class DataCenter
 				"\"Z\"\r\n" + 
 				"\"H\"\r\n" + 
 				"\"O\"\r\n" + 
-				"\"U\"\r\n" + 
+				"\"M\"\r\n" + 
 				"\"P\" ");
 		
 		System.out.println("Do you want to see what each letter does?");
@@ -617,11 +633,11 @@ public class DataCenter
 		String desiredLetter = lector.nextLine();
 		lector.nextLine();
 		
-		System.out.println("\r Right now, the building looks like this:\n");
+		System.out.println("\r Right now, the building looks like this:");
 		showMap();
 		
 		if(desiredLetter.equalsIgnoreCase("l") || desiredLetter.equalsIgnoreCase("z") || desiredLetter.equalsIgnoreCase("h") || desiredLetter.equalsIgnoreCase("o"))
-		{	
+		{				
 			System.out.println("\r If you apply the changes, the building would be as follows:\n");
 			
 			answer = theSystem.simulatePowerOff(desiredLetter);
@@ -642,11 +658,11 @@ public class DataCenter
 				System.out.println("Which column do you want to turn off?");
 				desiredColumn = lector.nextInt();
 				lector.nextLine();
-				
-				position = desiredColumn-1;
-				
-				answer = theSystem.simulatePowerOffColumn((desiredColumn-1));
 			}
+			position = desiredColumn-1;
+			
+			System.out.println("\r If you apply the changes, the building would be as follows:\n");
+			System.out.println(theSystem.simulatePowerOffColumn((desiredColumn-1)));
 		}
 		else if(desiredLetter.equalsIgnoreCase("p"))
 		{
@@ -662,11 +678,11 @@ public class DataCenter
 				System.out.println("Which row do you want to turn off?");
 				desiredRow = lector.nextInt();
 				lector.nextLine();
-				
-				position = desiredRow-1;
-				
-				answer = theSystem.simulatePowerOffRow((desiredRow-1));
 			}
+			position = desiredRow-1;
+			
+			System.out.println("\r If you apply the changes, the building would be as follows:\n");
+			System.out.println(theSystem.simulatePowerOffRow((desiredRow-1)));
 		}
 		else
 		{

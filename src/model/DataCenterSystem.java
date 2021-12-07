@@ -83,7 +83,7 @@ public class DataCenterSystem
 				 }
 			 }
 		}
-		else
+		else if(condition == true)
 		{
 			for(int i = 0; i < miniRooms.length; i++)
 	        {
@@ -248,19 +248,47 @@ public class DataCenterSystem
 		searchedRoom.initDisk(serverNumber, diskNumber, diskCapacity);
 	}
 	
-	public String validateCancelation(int roomToCancel)
+	public String validateCancelation(String nit, int roomToCancel)
 	{
-		String answer = "Do you really want to cancel the rental?";
+		String answer = "";
 		
-		MiniRoom searchedRoom = searchForRoomNumber(roomToCancel);
-		
-		int totalDisk = searchedRoom.calculateDisk();
-		
-		int totalRam = searchedRoom.calculateRam();
-		
-		answer += "\n\nYou have a processing capacity of:\r\n" + 
-				"total disk capacity: "+totalDisk+"\r\n" + 
-				"total RAM memory: "+totalRam;
+		if(nit == "---_---")
+		{
+			answer = "Do you really want to cancel the rental?";
+			
+			MiniRoom searchedRoom = searchForRoomNumber(roomToCancel);
+			
+			int totalDisk = searchedRoom.calculateDisk();
+			
+			int totalRam = searchedRoom.calculateRam();
+			
+			answer += "\n\nYou have a processing capacity of:\r\n" + 
+					"total disk capacity: "+totalDisk+"\r\n" + 
+					"total RAM memory: "+totalRam;
+		}
+		else
+		{
+			Company company = searchForNit(nit);
+			
+			if(company != null)
+			{
+				answer = "Do you really want to cancel the rental?";
+				
+				MiniRoom searchedRoom = searchForRoomNumber(roomToCancel);
+				
+				int totalDisk = searchedRoom.calculateDisk();
+				
+				int totalRam = searchedRoom.calculateRam();
+				
+				answer += "\n\nYou have a processing capacity of:\r\n" + 
+						"total disk capacity: "+totalDisk+"\r\n" + 
+						"total RAM memory: "+totalRam;
+			}
+			else
+			{
+				answer = "Error: Company nit not found.";
+			}
+		}
 		
 		return answer;
 	}
@@ -936,11 +964,26 @@ public class DataCenterSystem
 	{
 		int answer = 0;
 		
+		MiniRoom room = null;
+		
 		Project project = searchForRegistryNumber(registryNumber);
 		
-		MiniRoom room = project.getRoom();
-		
-		answer = room.getRoomNumber();
+		if(project != null)
+		{
+			room = project.getRoom();
+			if(room != null)
+			{
+				answer = room.getRoomNumber();
+			}
+			else
+			{
+				answer = -1;
+			}
+		}
+		else
+		{
+			answer = -1;
+		}
 		
 		return answer;
 	}
