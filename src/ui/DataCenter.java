@@ -19,11 +19,18 @@ public class DataCenter
 	
 	//Methods
 	
+	/**
+	 * DataCenter constructor, initialize the scanner.
+	 */
 	public DataCenter()
 	{
 		lector = new Scanner(System.in);
 	}
 	
+	/**
+	 * Launch the program.
+	 * @param args
+	 */
 	public static void main(String[]args)
 	{		
 		DataCenter dataCenter = new DataCenter();
@@ -33,11 +40,17 @@ public class DataCenter
 		dataCenter.menu();
 	}
 	
+	/**
+	 * Initializes the controller, which in turn initializes the matrix with the mini rooms.
+	 */
 	public void init()
 	{
 		theSystem = new DataCenterSystem();
 	}
 	
+	/**
+	 * Shows the user the functionalities of the system.
+	 */
 	public void menu()
 	{
 		System.out.println("Wellcome, what do you want to do?");
@@ -61,6 +74,10 @@ public class DataCenter
 		}	
 	}
 	
+	/**
+	 * 
+	 * @param answer
+	 */
 	public void toDo(int answer)
 	{
 		switch(answer)
