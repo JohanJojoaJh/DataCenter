@@ -122,11 +122,6 @@ public class MiniRoom
 		}
 	}
 	
-	
-	
-	
-	
-	
 	public String toString()
 	{
 		String windowString;

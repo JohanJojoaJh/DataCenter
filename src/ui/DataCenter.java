@@ -546,7 +546,10 @@ public class DataCenter
 	public void powerOn()
 	{
 		String answer = theSystem.simulatePowerOn();
-
+		
+		System.out.println("\\r Right now, the building looks like this:\n");
+		showMap();
+				
 		System.out.println("\r If you apply the changes, the building would be as follows:\n");
 		System.out.println(answer);
 		
@@ -577,6 +580,8 @@ public class DataCenter
 	public void powerOff()
 	{
 		String answer;
+		
+		int position = -1;
 		
 		System.out.println("Welcome, in this section you can simulate a room shutdown system, the available letters are:\r\n" + 
 				"\"L\"\r\n" + 
@@ -612,8 +617,11 @@ public class DataCenter
 		String desiredLetter = lector.nextLine();
 		lector.nextLine();
 		
+		System.out.println("\r Right now, the building looks like this:\n");
+		showMap();
+		
 		if(desiredLetter.equalsIgnoreCase("l") || desiredLetter.equalsIgnoreCase("z") || desiredLetter.equalsIgnoreCase("h") || desiredLetter.equalsIgnoreCase("o"))
-		{
+		{	
 			System.out.println("\r If you apply the changes, the building would be as follows:\n");
 			
 			answer = theSystem.simulatePowerOff(desiredLetter);
@@ -635,7 +643,9 @@ public class DataCenter
 				desiredColumn = lector.nextInt();
 				lector.nextLine();
 				
-				answer = theSystem.simulatePowerOffColumn(desiredLetter, desiredColumn);
+				position = desiredColumn-1;
+				
+				answer = theSystem.simulatePowerOffColumn((desiredColumn-1));
 			}
 		}
 		else if(desiredLetter.equalsIgnoreCase("p"))
@@ -653,7 +663,9 @@ public class DataCenter
 				desiredRow = lector.nextInt();
 				lector.nextLine();
 				
-				answer = theSystem.simulatePowerOffRow(desiredLetter, desiredRow);
+				position = desiredRow-1;
+				
+				answer = theSystem.simulatePowerOffRow((desiredRow-1));
 			}
 		}
 		else
@@ -681,7 +693,8 @@ public class DataCenter
 		
 		if(decision == 1)
 		{
-			theSystem.powerOff();
+			desiredLetter = desiredLetter.toLowerCase();
+			theSystem.powerOff(desiredLetter, position);
 		}
 		menu();
 	}

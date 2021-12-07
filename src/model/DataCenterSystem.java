@@ -409,7 +409,7 @@ public class DataCenterSystem
 	
 	public String powerOn()
 	{
-		String answer = "";
+		String answer = "\n Success.\n";
 		
 		for(int i = 0; i < miniRooms.length; i++)
         {
@@ -475,10 +475,7 @@ public class DataCenterSystem
 				
 				break;
 			
-			case"z":
-				int diagonalPartition = ROOMS_PER_CORRIDOR/CORRIDORS;
-				int countToDiagonal = 0;
-				
+			case"z":	
 				count = 0;
 				
 				for(int i = 0; i < miniRooms.length; i++)
@@ -489,23 +486,135 @@ public class DataCenterSystem
 						{
 							answer += (char)167;
 							count++;
-							countToDiagonal++;
 						}
 						else
 						{
-							if(miniRooms[i][j].getisOn() == true)
+							if(i == 1)
 							{
-								answer += (char)164;
-								count++;
-								countToDiagonal++;
+								if(j >= 6 && j <= 11)
+								{
+									answer += (char)167;
+									count++;
+								}
+								else
+								{
+									if(miniRooms[i][j].getisOn() == true)
+									{
+										answer += (char)164;
+										count++;
+									}
+									else
+									{
+										answer += (char)167;
+										count++;
+									}
+								}
 							}
-							else
+							else if(i == 2)
 							{
-								answer += (char)167;
-								count++;
-								countToDiagonal++;
+								if(j >= 12 && j <= 17)
+								{
+									answer += (char)167;
+									count++;
+								}
+								else
+								{
+									if(miniRooms[i][j].getisOn() == true)
+									{
+										answer += (char)164;
+										count++;
+									}
+									else
+									{
+										answer += (char)167;
+										count++;
+									}
+								}
 							}
-
+							else if(i == 3)
+							{
+								if(j >= 18 && j <= 23)
+								{
+									answer += (char)167;
+									count++;
+								}
+								else
+								{
+									if(miniRooms[i][j].getisOn() == true)
+									{
+										answer += (char)164;
+										count++;
+									}
+									else
+									{
+										answer += (char)167;
+										count++;
+									}
+								}
+							}
+							else if(i == 4)
+							{
+								if(j >= 24 && j <= 29)
+								{
+									answer += (char)167;
+									count++;
+								}
+								else
+								{
+									if(miniRooms[i][j].getisOn() == true)
+									{
+										answer += (char)164;
+										count++;
+									}
+									else
+									{
+										answer += (char)167;
+										count++;
+									}
+								}
+							}
+							else if(i == 5)
+							{
+								if(j >= 30 && j <= 35)
+								{
+									answer += (char)167;
+									count++;
+								}
+								else
+								{
+									if(miniRooms[i][j].getisOn() == true)
+									{
+										answer += (char)164;
+										count++;
+									}
+									else
+									{
+										answer += (char)167;
+										count++;
+									}
+								}
+							}
+							else if(i == 6)
+							{
+								if(j >= 36 && j <= 41)
+								{
+									answer += (char)167;
+									count++;
+								}
+								else
+								{
+									if(miniRooms[i][j].getisOn() == true)
+									{
+										answer += (char)164;
+										count++;
+									}
+									else
+									{
+										answer += (char)167;
+										count++;
+									}
+								}
+							}
 						}
 						if(count == 50)
 						{
@@ -518,30 +627,75 @@ public class DataCenterSystem
 				break;
 				
 			case"h":
+				count = 0;
+				
+				for(int i = 0; i < miniRooms.length; i++)
+				{
+					for(int j = 0; j < miniRooms[i].length; j++)
+					{						
+						if((i%2) == 0)
+						{
+							answer += (char)167;
+							count++;
+						}
+						else
+						{
+							if(miniRooms[i][j].getisOn() == true)
+						 	{
+								answer += (char)164;
+								count++;
+						 	}
+							else
+							{
+								answer += (char)167;
+								count++;
+							}
+						}
+						if(count == 50)
+						{
+							answer += "\r\n";
+							count = 0;
+						}
+					}
+				}				
 				
 				break;
 				
 			case"o":
+				count = 0;
+				
+				for(int i = 0; i < miniRooms.length; i++)
+				{
+					for(int j = 0; j < miniRooms[i].length; j++)
+					{						
+						if(miniRooms[i][j].haveWindow())
+						{
+							answer += (char)167;
+							count++;
+						}
+						else
+						{
+							if(miniRooms[i][j].getisOn() == true)
+						 	{
+								answer += (char)164;
+								count++;
+						 	}
+							else
+							{
+								answer += (char)167;
+								count++;
+							}
+						}
+						if(count == 50)
+						{
+							answer += "\r\n";
+							count = 0;
+						}
+					}
+				}
 				
 				break;			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		answer += "\r\n The mini rooms turned on have this icon: "+(char)164;
 		answer += "\r\n The mini rooms turned off have this icon: "+(char)167+"\n";
@@ -549,28 +703,235 @@ public class DataCenterSystem
 		return answer;	
 	}
 	
-	public String simulatePowerOffColumn(String desiredLetter, int column)
+	public String simulatePowerOffColumn(int column)
 	{
 		String answer = "";
+		
+		int count = 0;
+		
+		for(int i = 0; i < miniRooms.length; i++)
+		{
+			for(int j = 0; j < miniRooms[i].length; j++)
+			{						
+				if(j == column)
+				{
+					answer += (char)167;
+					count++;
+				}
+				else
+				{
+					if(miniRooms[i][j].getisOn() == true)
+				 	{
+						answer += (char)164;
+						count++;
+				 	}
+					else
+					{
+						answer += (char)167;
+						count++;
+					}
+				}
+				if(count == 50)
+				{
+					answer += "\r\n";
+					count = 0;
+				}
+			}
+		}
+		
+		answer += "\r\n The mini rooms turned on have this icon: "+(char)164;
+		answer += "\r\n The mini rooms turned off have this icon: "+(char)167+"\n";
 		
 		return answer;
 	}
 	
-	public String simulatePowerOffRow(String desiredLetter, int row)
+	public String simulatePowerOffRow(int row)
 	{
 		String answer = "";
+		
+		int count = 0;
+		
+		for(int i = 0; i < miniRooms.length; i++)
+		{
+			for(int j = 0; j < miniRooms[i].length; j++)
+			{						
+				if(i == row)
+				{
+					answer += (char)167;
+					count++;
+				}
+				else
+				{
+					if(miniRooms[i][j].getisOn() == true)
+				 	{
+						answer += (char)164;
+						count++;
+				 	}
+					else
+					{
+						answer += (char)167;
+						count++;
+					}
+				}
+				if(count == 50)
+				{
+					answer += "\r\n";
+					count = 0;
+				}
+			}
+		}
+		
+		answer += "\r\n The mini rooms turned on have this icon: "+(char)164;
+		answer += "\r\n The mini rooms turned off have this icon: "+(char)167+"\n";
 		
 		return answer;
 	}	
 	
-	public String powerOff()
+	public String powerOff(String desiredLetter, int position)
 	{
-		String answer = "";
+		String answer = "\n Success.\n";
+		
+		String letter = desiredLetter.toLowerCase();
+		
+		switch(letter)
+		{
+			case"l":
+				for(int i = 0; i < miniRooms.length; i++)
+				{
+					for(int j = 0; j < miniRooms[i].length; j++)
+					{						
+						if(i == 0)
+						{
+							miniRooms[i][j].setOn(false);
+						}
+						else if(j == 0)
+						{
+							miniRooms[i][j].setOn(false);
+						}
+					}
+				}
+				
+				break;
+			
+			case"z":	
+				for(int i = 0; i < miniRooms.length; i++)
+				{
+					for(int j = 0; j < miniRooms[i].length; j++)
+					{						
+						if(i == 0 || i == 7)
+						{
+							miniRooms[i][j].setOn(false);
+						}
+						else
+						{
+							if(i == 1)
+							{
+								if(j >= 6 && j <= 11)
+								{
+									miniRooms[i][j].setOn(false);
+								}
+							}
+							else if(i == 2)
+							{
+								if(j >= 12 && j <= 17)
+								{
+									miniRooms[i][j].setOn(false);
+								}
+							}
+							else if(i == 3)
+							{
+								if(j >= 18 && j <= 23)
+								{
+									miniRooms[i][j].setOn(false);
+								}
+							}
+							else if(i == 4)
+							{
+								if(j >= 24 && j <= 29)
+								{
+									miniRooms[i][j].setOn(false);
+								}
+							}
+							else if(i == 5)
+							{
+								if(j >= 30 && j <= 35)
+								{
+									miniRooms[i][j].setOn(false);
+								}
+							}
+							else if(i == 6)
+							{
+								if(j >= 36 && j <= 41)
+								{
+									miniRooms[i][j].setOn(false);
+								}
+							}
+						}
+					}
+				}
+				
+				break;
+				
+			case"h":
+				for(int i = 0; i < miniRooms.length; i++)
+				{
+					for(int j = 0; j < miniRooms[i].length; j++)
+					{						
+						if((i%2) == 0)
+						{
+							miniRooms[i][j].setOn(false);
+						}
+					}
+				}				
+				
+				break;
+				
+			case"o":
+				for(int i = 0; i < miniRooms.length; i++)
+				{
+					for(int j = 0; j < miniRooms[i].length; j++)
+					{						
+						if(miniRooms[i][j].haveWindow())
+						{
+							miniRooms[i][j].setOn(false);
+						}
+					}
+				}
+				
+				break;
+			
+			case "m":
+				for(int i = 0; i < miniRooms.length; i++)
+				{
+					for(int j = 0; j < miniRooms[i].length; j++)
+					{						
+						if(j == position)
+						{
+							miniRooms[i][j].setOn(false);
+						}
+					}
+				}
+				
+				break;
+				
+			case "p":
+				for(int i = 0; i < miniRooms.length; i++)
+				{
+					for(int j = 0; j < miniRooms[i].length; j++)
+					{						
+						if(i == position)
+						{
+							miniRooms[i][j].setOn(false);
+						}
+					}
+				}
+				
+				break;
+		}
 		
 		return answer;	
 	}
-	
-	
+		
 	public int findRoom(String registryNumber)
 	{
 		int answer = 0;
@@ -631,6 +992,5 @@ public class DataCenterSystem
 		}
 		return searchUser;
 	}
-	
 }
 	
